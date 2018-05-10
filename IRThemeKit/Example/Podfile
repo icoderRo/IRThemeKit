@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'IRThemeKit_Example' do
+  pod 'IRThemeKit', :path => '../'
+
+  target 'IRThemeKit_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
