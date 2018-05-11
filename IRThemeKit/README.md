@@ -22,7 +22,7 @@ pod 'IRThemeKit'
 
 ## Author
 
-icoderRo, luocong@ihuayue.cn
+icoderRo
 
 ## License
 

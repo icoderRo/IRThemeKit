@@ -25,6 +25,7 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		CB7A8E2120A420130081B05B /* IRThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7A8E2020A420130081B05B /* IRThemeManager.m */; };
+		CB7A8E2420A446190081B05B /* IRTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7A8E2320A446190081B05B /* IRTheme.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,9 @@
 		BB37524312B9FBF289372A34 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CB7A8E1F20A420130081B05B /* IRThemeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRThemeManager.h; sourceTree = "<group>"; };
 		CB7A8E2020A420130081B05B /* IRThemeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRThemeManager.m; sourceTree = "<group>"; };
+		CB7A8E2220A446190081B05B /* IRTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRTheme.h; sourceTree = "<group>"; };
+		CB7A8E2320A446190081B05B /* IRTheme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRTheme.m; sourceTree = "<group>"; };
+		CB7A8E2520A449DD0081B05B /* IRThemeKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRThemeKit.h; sourceTree = "<group>"; };
 		CC91B53BA108EE26E0FC4195 /* Pods_IRThemeKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IRThemeKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8199301841103EAB7A40F8 /* Pods-IRThemeKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRThemeKit_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-IRThemeKit_Example/Pods-IRThemeKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		CF8E248A06A14523FDB554B2 /* Pods-IRThemeKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRThemeKit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IRThemeKit_Example/Pods-IRThemeKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -205,6 +209,9 @@
 			children = (
 				CB7A8E1F20A420130081B05B /* IRThemeManager.h */,
 				CB7A8E2020A420130081B05B /* IRThemeManager.m */,
+				CB7A8E2220A446190081B05B /* IRTheme.h */,
+				CB7A8E2320A446190081B05B /* IRTheme.m */,
+				CB7A8E2520A449DD0081B05B /* IRThemeKit.h */,
 			);
 			name = IRThemeKit;
 			path = ../IRThemeKit/Classes/IRThemeKit;
@@ -418,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB7A8E2120A420130081B05B /* IRThemeManager.m in Sources */,
+				CB7A8E2420A446190081B05B /* IRTheme.m in Sources */,
 				6003F59E195388D20070C39A /* IRAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* IRViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,

@@ -1,6 +1,6 @@
 //
 //  IRThemeManager.m
-//  IRThemeKit_Example
+//  IRThemeKit
 //
 //  Created by 聪 on 2018/5/10.
 //  Copyright © 2018年 icoderRo. All rights reserved.
