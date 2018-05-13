@@ -8,6 +8,7 @@
 
 #import "IRViewController.h"
 
+
 @interface IRViewController ()
 
 @property (nonatomic, weak) UIView *view1;
