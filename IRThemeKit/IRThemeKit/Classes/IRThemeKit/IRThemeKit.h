@@ -10,7 +10,6 @@
 #define IRThemeKit_h
 
 #import "IRTheme.h"
-#import <objc/message.h>
 
 
 

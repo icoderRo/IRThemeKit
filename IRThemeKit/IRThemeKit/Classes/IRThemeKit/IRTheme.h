@@ -5,24 +5,21 @@
 //  Created by 聪 on 2018/5/10.
 //  Copyright © 2018年 icoderRo. All rights reserved.
 //
-#define IRThemePropertyInterface(Cls, PropertyCls, )\
-@interface Cls (IRTheme)\
-@property (strong, nonatomic) PropertyCls *theme;\
-@end
 
-#define IRThemePropertyImplementation(Cls, PropertyCls)\
-@implementation Cls(IRTheme)\
-@dynamic theme;\
-- (PropertyCls *)theme {\
-    PropertyCls *obj = objc_getAssociatedObject(self,  @selector(theme));\
+#define IRThemeCacheProperty \
+@property (strong, nonatomic) NSMutableDictionary * _Nullable ir_cache;
+
+#define IRThemeCacheImplementation \
+@dynamic ir_cache;\
+- (NSMutableDictionary *)ir_cache {\
+    NSMutableDictionary *obj = objc_getAssociatedObject(self,  @selector(ir_cache));\
     if (!obj) {\
-        objc_setAssociatedObject(self,  @selector(theme), obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);\
+        obj = [NSMutableDictionary dictionary];\
+        objc_setAssociatedObject(self,  @selector(ir_cache), obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);\
     }\
     return obj;\
 }\
-@end
 
-typedef Class _Nullable *_Nullable(^ClassBlock)(NSString * _Nonnull selStr);
 
 #import <Foundation/Foundation.h>
 
@@ -43,10 +40,11 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 NS_ASSUME_NONNULL_END
 
+typedef UIView *_Nullable(^ _Nullable IRThemeArg1Block)(NSString * _Nullable keyPath);
 
 
-
-//IRThemePropertyInterface(UIView, backgroundColor)
-
-
+@interface UIView (IRTheme)
+IRThemeCacheProperty
+- (IRThemeArg1Block)ir_backgroundColor;
+@end
 

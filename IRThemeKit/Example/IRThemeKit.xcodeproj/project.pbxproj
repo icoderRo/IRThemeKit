@@ -271,6 +271,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = icoderRo;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = 38QS4M9J37;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -556,6 +559,7 @@
 			baseConfigurationReference = CF8E248A06A14523FDB554B2 /* Pods-IRThemeKit_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 38QS4M9J37;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRThemeKit/IRThemeKit-Prefix.pch";
 				INFOPLIST_FILE = "IRThemeKit/IRThemeKit-Info.plist";
@@ -571,6 +575,7 @@
 			baseConfigurationReference = CF8199301841103EAB7A40F8 /* Pods-IRThemeKit_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 38QS4M9J37;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRThemeKit/IRThemeKit-Prefix.pch";
 				INFOPLIST_FILE = "IRThemeKit/IRThemeKit-Info.plist";

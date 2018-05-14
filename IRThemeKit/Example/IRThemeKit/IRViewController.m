@@ -7,7 +7,7 @@
 //
 
 #import "IRViewController.h"
-
+#import "IRTheme.h"
 
 @interface IRViewController ()
 
@@ -20,10 +20,21 @@
 {
     [super viewDidLoad];
 	
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
+//    view.ir_backgroundColor(@"dddd");
+//    [self.view addSubview:view];
+
     
-//    for (int i = 0; i < 1000; i++) {
+//    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 100 , 100, 20)];
+//    view1.backgroundColor = view.backgroundColor;
+//    [self.view addSubview:view1];
     
-        
+            CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
+    for (int i = 0; i < 50000; i++) {
+    
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
+        view.ir_backgroundColor(@"dddd");
+        [self.view addSubview:view];
         
 //        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
 //    view.backgroundColor = [UIColor redColor];
@@ -33,8 +44,9 @@
 //
 //    self.view1 = view;
     
-//    }
-    
+    }
+    CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
+    NSLog(@"%f second", endTime - startTime);
 }
 
 
