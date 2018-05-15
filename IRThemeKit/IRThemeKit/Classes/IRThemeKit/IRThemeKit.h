@@ -10,7 +10,8 @@
 #define IRThemeKit_h
 
 #import "IRTheme.h"
-
+#import "IRThemeMgr.h"
+#import "IRThemeConfig.h"
 
 
 #endif /* IRThemeKit_h */

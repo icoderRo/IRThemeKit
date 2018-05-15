@@ -7,44 +7,47 @@
 //
 
 #import "IRViewController.h"
-#import "IRTheme.h"
+#import "IRThemeKit.h"
 
-@interface IRViewController ()
+@interface IRViewController ()<IRThemeProtocol>
 
 @property (nonatomic, weak) UIView *view1;
 @end
 
 @implementation IRViewController
 
++ (BOOL)ir_isUseDefaultThemeValue {
+    return YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
-//    view.ir_backgroundColor(@"dddd");
-//    [self.view addSubview:view];
-
     
-//    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 100 , 100, 20)];
-//    view1.backgroundColor = view.backgroundColor;
-//    [self.view addSubview:view1];
+    NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"IRDefaultTheme" ofType:@"plist"];
     
-            CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
-    for (int i = 0; i < 50000; i++) {
+    IRThemeConfig *config = [IRThemeConfig new];
+    config.filePath = defaultPath;
+    config.colorKey = @"Color";
+    config.imageKey = @"Image";
+    config.hybridKey = @"Hybrid";
     
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
-        view.ir_backgroundColor(@"dddd");
-        [self.view addSubview:view];
-        
-//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
-//    view.backgroundColor = [UIColor redColor];
-//    [view.backgroundColor.theme ir_setName:@"11111"];
-//    view.backgroundColor.theme.name = @"2222";
-//        [self.view addSubview:view];
-//
-//    self.view1 = view;
+    BOOL success = [[IRThemeMgr manager] ir_setupThemeWithConfig:config];
     
+    if (!success) {
+        NSLog(@"not find configFile");
     }
+    
+    CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
+    
+    for (int i = 0; i < 50000; i++) {
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
+        view.ir_backgroundColor(@"home_view_background");
+        [self.view addSubview:view];
+    }
+    
+    
     CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
     NSLog(@"%f second", endTime - startTime);
 }

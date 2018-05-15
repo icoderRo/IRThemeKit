@@ -46,5 +46,6 @@ typedef UIView *_Nullable(^ _Nullable IRThemeArg1Block)(NSString * _Nullable key
 @interface UIView (IRTheme)
 IRThemeCacheProperty
 - (IRThemeArg1Block)ir_backgroundColor;
+
 @end
 

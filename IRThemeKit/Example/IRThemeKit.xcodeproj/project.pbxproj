@@ -24,8 +24,10 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		CB7A8E2120A420130081B05B /* IRThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7A8E2020A420130081B05B /* IRThemeManager.m */; };
+		CB7A8E2120A420130081B05B /* IRThemeMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7A8E2020A420130081B05B /* IRThemeMgr.m */; };
 		CB7A8E2420A446190081B05B /* IRTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7A8E2320A446190081B05B /* IRTheme.m */; };
+		CB7A8E3020AAB49C0081B05B /* IRDefaultTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB7A8E2F20AAB49C0081B05B /* IRDefaultTheme.plist */; };
+		CB7A8E3320AAD2F10081B05B /* IRThemeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7A8E3220AAD2F10081B05B /* IRThemeConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,11 +67,14 @@
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		89E6DFCDCC06AF4AB28A68D3 /* Pods-IRThemeKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRThemeKit_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IRThemeKit_Tests/Pods-IRThemeKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BB37524312B9FBF289372A34 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		CB7A8E1F20A420130081B05B /* IRThemeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRThemeManager.h; sourceTree = "<group>"; };
-		CB7A8E2020A420130081B05B /* IRThemeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRThemeManager.m; sourceTree = "<group>"; };
+		CB7A8E1F20A420130081B05B /* IRThemeMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRThemeMgr.h; sourceTree = "<group>"; };
+		CB7A8E2020A420130081B05B /* IRThemeMgr.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRThemeMgr.m; sourceTree = "<group>"; };
 		CB7A8E2220A446190081B05B /* IRTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRTheme.h; sourceTree = "<group>"; };
 		CB7A8E2320A446190081B05B /* IRTheme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRTheme.m; sourceTree = "<group>"; };
 		CB7A8E2520A449DD0081B05B /* IRThemeKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRThemeKit.h; sourceTree = "<group>"; };
+		CB7A8E2F20AAB49C0081B05B /* IRDefaultTheme.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IRDefaultTheme.plist; sourceTree = "<group>"; };
+		CB7A8E3120AAD2F10081B05B /* IRThemeConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRThemeConfig.h; sourceTree = "<group>"; };
+		CB7A8E3220AAD2F10081B05B /* IRThemeConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRThemeConfig.m; sourceTree = "<group>"; };
 		CC91B53BA108EE26E0FC4195 /* Pods_IRThemeKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IRThemeKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8199301841103EAB7A40F8 /* Pods-IRThemeKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRThemeKit_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-IRThemeKit_Example/Pods-IRThemeKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		CF8E248A06A14523FDB554B2 /* Pods-IRThemeKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRThemeKit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IRThemeKit_Example/Pods-IRThemeKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +164,7 @@
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				CB7A8E2F20AAB49C0081B05B /* IRDefaultTheme.plist */,
 			);
 			name = "Example for IRThemeKit";
 			path = IRThemeKit;
@@ -207,10 +213,12 @@
 		CB7A8E1E20A41FF30081B05B /* IRThemeKit */ = {
 			isa = PBXGroup;
 			children = (
-				CB7A8E1F20A420130081B05B /* IRThemeManager.h */,
-				CB7A8E2020A420130081B05B /* IRThemeManager.m */,
+				CB7A8E1F20A420130081B05B /* IRThemeMgr.h */,
+				CB7A8E2020A420130081B05B /* IRThemeMgr.m */,
 				CB7A8E2220A446190081B05B /* IRTheme.h */,
 				CB7A8E2320A446190081B05B /* IRTheme.m */,
+				CB7A8E3120AAD2F10081B05B /* IRThemeConfig.h */,
+				CB7A8E3220AAD2F10081B05B /* IRThemeConfig.m */,
 				CB7A8E2520A449DD0081B05B /* IRThemeKit.h */,
 			);
 			name = IRThemeKit;
@@ -305,6 +313,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				CB7A8E3020AAB49C0081B05B /* IRDefaultTheme.plist in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -427,11 +436,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB7A8E2120A420130081B05B /* IRThemeManager.m in Sources */,
+				CB7A8E2120A420130081B05B /* IRThemeMgr.m in Sources */,
 				CB7A8E2420A446190081B05B /* IRTheme.m in Sources */,
 				6003F59E195388D20070C39A /* IRAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* IRViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				CB7A8E3320AAD2F10081B05B /* IRThemeConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
