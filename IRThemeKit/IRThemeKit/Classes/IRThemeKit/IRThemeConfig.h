@@ -11,11 +11,10 @@
 
 @interface IRThemeConfig : NSObject
 
-/**< must set defaultFilePath and  */
-@property (nonatomic, copy, nonnull) NSString *defaultFilePath;
-@property (nonatomic, copy, nonnull) NSString *filePath;
+/**< must set usingfilePath !!! */
+@property (nonatomic, copy, nonnull) NSString *usingfilePath;
 
-/**< colorKey use to get colorValue */
+/**< colorKey mapper to colorDict */
 @property (nonatomic, copy, nullable) NSString *colorKey;
 /**< imageKey use to get imageValue */
 @property (nonatomic, copy, nullable) NSString *imageKey;
@@ -23,6 +22,22 @@
 @property (nonatomic, copy, nullable) NSString *hybridKey;
 /**< hybrid must set hybridKey  */
 @property (nonatomic, copy, nullable) IRThemeConfigHybrid *hybrid;
+
+
+/**
+ if isUseDefaultThemeValue = Yes, must set defaultFilePath, otherwise it no affect.
+ 
+ @discussion if current using theme has no value then you want to use default theme value
+    Example:
+ 
+    @code
+        config.defaultFilePath = defaultPath;
+        config.isUseDefaultThemeValue = YES;
+    @endcode
+ 
+ */
+@property (nonatomic) BOOL isUseDefaultThemeValue;
+@property (nonatomic, copy, nullable) NSString *defaultFilePath;
 
 @end
 

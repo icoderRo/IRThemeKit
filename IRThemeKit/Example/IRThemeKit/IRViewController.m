@@ -9,16 +9,13 @@
 #import "IRViewController.h"
 #import "IRThemeKit.h"
 
-@interface IRViewController ()<IRThemeProtocol>
+@interface IRViewController ()
 
 @property (nonatomic, weak) UIView *view1;
 @end
 
 @implementation IRViewController
 
-+ (BOOL)ir_isUseDefaultThemeValue {
-    return YES;
-}
 
 - (void)viewDidLoad
 {
@@ -27,12 +24,15 @@
     NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"IRDefaultTheme" ofType:@"plist"];
     
     IRThemeConfig *config = [IRThemeConfig new];
-    config.filePath = defaultPath;
+    config.usingfilePath = defaultPath;
     config.colorKey = @"Color";
     config.imageKey = @"Image";
     config.hybridKey = @"Hybrid";
     
-    BOOL success = [[IRThemeMgr manager] ir_setupThemeWithConfig:config];
+    config.defaultFilePath = defaultPath;
+    config.isUseDefaultThemeValue = YES;
+    
+    BOOL success = [[IRThemeMgr manager] ir_themeWithConfig:config];
     
     if (!success) {
         NSLog(@"not find configFile");

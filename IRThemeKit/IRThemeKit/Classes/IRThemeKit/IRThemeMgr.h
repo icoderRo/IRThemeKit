@@ -9,22 +9,10 @@
 #import <Foundation/Foundation.h>
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol IRThemeProtocol <NSObject>
-@optional
-
-/**
- if current theme has no value whether use default theme value
- @return Yes --> use default theme
- */
-+ (BOOL)ir_isUseDefaultThemeValue;
-
-@end
-
-
 @class IRThemeConfig;
 
 @interface IRThemeMgr : NSObject
-///< urrent using theme config
+///< current using theme config
 @property (nonatomic, copy, readonly) IRThemeConfig *config;
 
 + (instancetype _Nullable )manager;
@@ -33,34 +21,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Manager Theme Configuration
 /**
- use in initializeC
-
+ * use in initialize or set a new theme
+ * when set a new theme
+    Example:
+    @code
+        IRThemeConfig *config = [IRThemeMgr manager].config.copy;
+        config.usingfilePath = @"";
+        [[IRThemeMgr manager] ir_themeWithConfig:config];
+    @endcode
+ 
  @param config IRThemeConfig
  @return success / failure
  */
-- (BOOL)ir_setupThemeWithConfig:(IRThemeConfig *)config;
-
-
-/**
- use new theme
-
- @param config IRThemeConfig
- @return success / failure
- */
-- (BOOL)ir_setNewThemeWithConfig:(IRThemeConfig *)config;
-
-
-/**
- use new theme
-
- @param filePath filePath
- @return success / failure
- */
-- (BOOL)ir_setNewThemeWithFilePath:(NSString *)filePath;
+- (BOOL)ir_themeWithConfig:(IRThemeConfig *)config;
 
 @end
-
-
 
 NS_ASSUME_NONNULL_END
 

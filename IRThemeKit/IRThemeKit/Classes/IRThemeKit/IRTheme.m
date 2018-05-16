@@ -53,6 +53,14 @@ static id (*ir_themeValueSend)(id, SEL, id, id);
 static void (*ir_arg1Send)(id, SEL, id);
 
 #pragma mark - Private
+
+/**
+ get image or color
+
+ @param  keyPath   keyPath
+ @param  configKey colorKey / imageKey / hybridKey
+ @return image or color
+ */
 static id IRKeyPathValue(NSString *keyPath, NSString *configKey) {
     SEL sel = NSSelectorFromString(ir_themeValue);;
     if (!IRMgr || !sel || ![IRMgr respondsToSelector:sel]) return nil;
@@ -67,7 +75,13 @@ static id IRKeyPathValue(NSString *keyPath, NSString *configKey) {
 static void IRArg1Send(id target, SEL sel, id value) {
     if (!target || !sel || ![target respondsToSelector:sel]) return;
     ir_arg1Send = (void(*)(id, SEL, id))objc_msgSend;
-    ir_arg1Send(target, sel, value);
+    if ([value isKindOfClass:[UIColor class]]) {
+        [UIView animateWithDuration:.15 animations:^{
+            ir_arg1Send(target, sel, value);
+        }];
+    } else {
+        ir_arg1Send(target, sel, value);
+    }
 }
 
 @implementation UIView (IRTheme)
@@ -77,11 +91,11 @@ IRThemeCacheImplementation
     return ^UIView *(NSString *keyPath) {
 //        CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
  
-        id obj = IRKeyPathValue(keyPath, IRColorKey);
-        if (!obj) return self;
+        id value = IRKeyPathValue(keyPath, IRColorKey);
+        if (!value) return self;
         
         SEL sel = NSSelectorFromString(ir_setBackgroundColor);;
-        IRArg1Send(self, sel, obj);
+        IRArg1Send(self, sel, value);
         
 //        CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
 //        NSLog(@"%f", endTime - startTime);

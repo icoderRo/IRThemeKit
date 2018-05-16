@@ -27,26 +27,22 @@
     return _manager;
 }
 
-- (BOOL)ir_setupThemeWithConfig:(IRThemeConfig *)config {
+- (BOOL)ir_themeWithConfig:(IRThemeConfig *)config {
     _config = config;
-    return [self _mapValuesWithFilePath:config.filePath];
+    return [self _valuesWithDefaultPath:config.defaultFilePath usingPath:config.usingfilePath];
 }
 
-- (BOOL)ir_setNewThemeWithConfig:(IRThemeConfig *)config {
-    _config = config;
-    return [self _mapValuesWithFilePath:config.filePath];
-}
-
-- (BOOL)ir_setNewThemeWithFilePath:(NSString *)filePath {
-    _config.filePath = filePath;
-    return [self _mapValuesWithFilePath:filePath];
-}
-
-- (BOOL)_mapValuesWithFilePath:(NSString *)filePath {
-    if (!filePath) return NO;
-    NSDictionary *mapValues = [NSDictionary dictionaryWithContentsOfFile:filePath];
+- (BOOL)_valuesWithDefaultPath:(NSString *)defaultFilePath usingPath:(NSString *)usingfilePath {
+    if (!usingfilePath) return NO;
+    NSDictionary *mapValues = [NSDictionary dictionaryWithContentsOfFile:usingfilePath];
     if (!mapValues) return NO;
     _mapValues = mapValues;
+    
+    if (defaultFilePath) {
+        NSDictionary *defaultMapValues = [NSDictionary dictionaryWithContentsOfFile:defaultFilePath];
+        _defaultMapValues = defaultMapValues;
+    }
+    
     return YES;
 }
 
@@ -68,18 +64,14 @@
 - (id)_colorWithKey:(NSString *)key {
     NSString *colorKey = _config.colorKey;
     id colorDict = _mapValues[colorKey];
-    if (colorDict && [colorDict isKindOfClass:[NSDictionary class]]) {
+    if (!colorDict && ![colorDict isKindOfClass:[NSDictionary class]]) {
         NSString *hexStr = ((NSDictionary *)colorDict)[key];
         if (!hexStr || hexStr.length <= 0) return nil;
         return [self _colorWithHexStr:hexStr];
     } else {
-        if ([[self class] respondsToSelector:@selector(ir_isUseDefaultThemeValue)]) {
-            BOOL use = [[self class] ir_isUseDefaultThemeValue];
-            if (!use) return nil;
-            
-            
-        }
-        return nil;
+        if (!_config.isUseDefaultThemeValue) return nil;
+        
+        return [UIColor redColor];
     }
 }
 
