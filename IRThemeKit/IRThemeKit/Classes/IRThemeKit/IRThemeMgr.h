@@ -16,8 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) IRThemeConfig *config;
 
 + (instancetype _Nullable )manager;
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (id)mutableCopy UNAVAILABLE_ATTRIBUTE;
+- (id)copy UNAVAILABLE_ATTRIBUTE;
 
 #pragma mark - Manager Theme Configuration
 /**

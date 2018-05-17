@@ -16,18 +16,38 @@
 #define IRImageKey  IRMgr.config.imageKey
 #define IRHybridKey IRMgr.config.hybridKey
 
-@implementation IRTheme
-
-//static
-
-+ (instancetype)themeWithTarget:(id)target {
-    IRTheme *theme = [[self alloc] init];
-    theme->_target = target;
-    return theme;
-}
+#define IRThemeCacheProperty(cls) \
+@interface cls ()\
+@property (strong, nonatomic) NSMutableDictionary * _Nullable ir_cache;\
 @end
 
-#pragma mark - selectorName
+#define IRThemeCacheImpl \
+- (NSMutableDictionary *)ir_cache {\
+    NSMutableDictionary *obj = objc_getAssociatedObject(self,  @selector(ir_cache));\
+    if (!obj) {\
+        obj = [NSMutableDictionary dictionary];\
+        objc_setAssociatedObject(self,  @selector(ir_cache), obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);\
+        void(*ir_targetSend)(id,SEL,id)=(void(*)(id,SEL,id))objc_msgSend;\
+        ir_targetSend(IRMgr,NSSelectorFromString(ir_addTarget), self);\
+    }\
+    return obj;\
+}
+
+#define ir_arg1UpdateTheme \
+[self.ir_cache enumerateKeysAndObjectsUsingBlock:^(NSString *  _Nonnull selStr, NSDictionary *  _Nonnull dict, BOOL * _Nonnull stop) {\
+    NSString *keyPath = dict[ir_keyPath];\
+    NSString *configKey = dict[ir_configKey];\
+    id value = IRKeyPathValue(keyPath, configKey);\
+    if (value) {\
+        SEL sel = NSSelectorFromString(selStr);\
+        IRArg1Send(self, sel, value);\
+    }\
+}];
+
+static NSString * const ir_keyPath = @"keyPath";
+static NSString * const ir_configKey = @"configKey";
+
+#pragma mark - Sel
 /**
  * No need to waste
  
@@ -42,65 +62,93 @@ static NSString * argSelctor(NSString *sel) {
     return newSel;
 }
 **/
-
-/// only several sel
-#pragma mark - Get KeyPath Value
+static NSString * const ir_addTarget = @"_addTarget:";
 static NSString * const ir_themeValue = @"_valueForKey:configKey:";
 static NSString * const ir_setBackgroundColor = @"setBackgroundColor:";
+static NSString * const ir_setImage = @"setImage:";
 
 #pragma mark - Objc_msgSend
 static id (*ir_themeValueSend)(id, SEL, id, id);
 static void (*ir_arg1Send)(id, SEL, id);
 
-#pragma mark - Private
-
+#pragma mark - Get KeyPath Value
 /**
  get image or color
-
+ 
  @param  keyPath   keyPath
  @param  configKey colorKey / imageKey / hybridKey
  @return image or color
  */
 static id IRKeyPathValue(NSString *keyPath, NSString *configKey) {
-    SEL sel = NSSelectorFromString(ir_themeValue);;
+    SEL sel = NSSelectorFromString(ir_themeValue);
     if (!IRMgr || !sel || ![IRMgr respondsToSelector:sel]) return nil;
     ir_themeValueSend = (id(*)(id, SEL, id, id))objc_msgSend;
     return ir_themeValueSend(IRMgr, sel, keyPath, configKey);
 }
 
+#pragma mark - Private
 /**
  * use objc_msgSend or performSelector
  * NSInvocation can Package multiple parameters but it much slower than others
  */
+
 static void IRArg1Send(id target, SEL sel, id value) {
     if (!target || !sel || ![target respondsToSelector:sel]) return;
     ir_arg1Send = (void(*)(id, SEL, id))objc_msgSend;
+    
     if ([value isKindOfClass:[UIColor class]]) {
         [UIView animateWithDuration:.15 animations:^{
             ir_arg1Send(target, sel, value);
         }];
-    } else {
-        ir_arg1Send(target, sel, value);
+        return;
     }
+    ir_arg1Send(target, sel, value);
 }
 
+#pragma mark - UIView
+IRThemeCacheProperty(UIView)
 @implementation UIView (IRTheme)
-IRThemeCacheImplementation
+IRThemeCacheImpl
+- (void)ir_updateTheme {ir_arg1UpdateTheme}
 
-- (IRThemeArg1Block)ir_backgroundColor {
+- (IRThemeArgBlock)ir_backgroundColor {
     return ^UIView *(NSString *keyPath) {
-//        CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
- 
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[ir_keyPath] = keyPath;
+        dict[ir_configKey] = IRColorKey;
+        /// sel as key ensure the lastest value
+        [self.ir_cache setObject:dict.copy forKey:ir_setBackgroundColor];
+        
         id value = IRKeyPathValue(keyPath, IRColorKey);
         if (!value) return self;
         
-        SEL sel = NSSelectorFromString(ir_setBackgroundColor);;
+        SEL sel = NSSelectorFromString(ir_setBackgroundColor);
         IRArg1Send(self, sel, value);
-        
-//        CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
-//        NSLog(@"%f", endTime - startTime);
         return self;
     };
 }
+@end
 
+#pragma mark - UIImageView
+IRThemeCacheProperty(UIImageView)
+@implementation UIImageView (IRTheme)
+IRThemeCacheImpl
+- (void)ir_updateTheme {ir_arg1UpdateTheme}
+
+- (IRThemeArgBlock)ir_image {
+    return ^UIImageView *(NSString *keyPath) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[ir_keyPath] = keyPath;
+        dict[ir_configKey] = IRImageKey;
+        /// sel as key ensure the lastest value
+        [self.ir_cache setObject:dict.copy forKey:ir_setImage];
+        
+        id value = IRKeyPathValue(keyPath, IRImageKey);
+        if (!value) return self;
+        
+        SEL sel = NSSelectorFromString(ir_setImage);
+        IRArg1Send(self, sel, value);
+        return self;
+    };
+}
 @end

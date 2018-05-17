@@ -11,9 +11,9 @@
 
 @interface IRThemeMgr()
 ///< Key --> Value
-@property (nonatomic, strong) NSDictionary *mapValues;
+@property (nonatomic, strong) NSDictionary *usingMapValues;
 @property (nonatomic, strong) NSDictionary *defaultMapValues;
-
+@property (nonatomic, strong) NSHashTable *targets;
 @end
 
 @implementation IRThemeMgr
@@ -36,19 +36,20 @@
     if (!usingfilePath) return NO;
     NSDictionary *mapValues = [NSDictionary dictionaryWithContentsOfFile:usingfilePath];
     if (!mapValues) return NO;
-    _mapValues = mapValues;
+    _usingMapValues = mapValues;
     
     if (defaultFilePath) {
         NSDictionary *defaultMapValues = [NSDictionary dictionaryWithContentsOfFile:defaultFilePath];
-        _defaultMapValues = defaultMapValues;
+        if (defaultMapValues) _defaultMapValues = defaultMapValues;
     }
     
+    [self _update];
     return YES;
 }
 
 #pragma mark - Get KeyPath Value
 - (id)_valueForKey:(NSString *)key configKey:(nonnull NSString *)configKey{
-    if (!_mapValues) return nil;
+    if (!_usingMapValues || !key || !configKey) return nil;
     
     if ([configKey isEqualToString:_config.colorKey]) {
        return [self _colorWithKey:key];
@@ -63,15 +64,19 @@
 #pragma mark - Private
 - (id)_colorWithKey:(NSString *)key {
     NSString *colorKey = _config.colorKey;
-    id colorDict = _mapValues[colorKey];
-    if (!colorDict && ![colorDict isKindOfClass:[NSDictionary class]]) {
+    id colorDict = _usingMapValues[colorKey];
+    if (colorDict && [colorDict isKindOfClass:[NSDictionary class]]) {
         NSString *hexStr = ((NSDictionary *)colorDict)[key];
         if (!hexStr || hexStr.length <= 0) return nil;
         return [self _colorWithHexStr:hexStr];
     } else {
         if (!_config.isUseDefaultThemeValue) return nil;
-        
-        return [UIColor redColor];
+        if (!_defaultMapValues) return nil;
+        colorDict = _defaultMapValues[colorKey];
+        if (!colorDict || ![colorDict isKindOfClass:[NSDictionary class]]) return nil;
+        NSString *hexStr = ((NSDictionary *)colorDict)[key];
+        if (!hexStr || hexStr.length <= 0) return nil;
+        return [self _colorWithHexStr:hexStr];
     }
 }
 
@@ -93,11 +98,35 @@
     unsigned int hex = 0;
     [[NSScanner scannerWithString:hexStr] scanHexInt:&hex];
     
+    CGFloat red = ((CGFloat)((hex & 0xFF0000) >> 16)) / 255.0;
+    CGFloat green = ((CGFloat)((hex & 0xFF00) >> 8)) / 255.0;
+    CGFloat blue = ((CGFloat)(hex & 0xFF)) / 255.0;
+    
     if (hexStr.length == 6) {
-        return [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0 green:((float)((hex & 0xFF00) >> 8))/255.0 blue:((float)(hex & 0xFF))/255.0 alpha:1.0];
+        return [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
     } else { /// alpha
-        return [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0 green:((float)((hex & 0xFF00) >> 8))/255.0 blue:((float)(hex & 0xFF))/255.0 alpha:((float)((hex & 0xFF000000) >> 24))/255.0];
+        CGFloat alpha = ((float)((hex & 0xFF000000) >> 24)) / 255.0;
+        return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
     }
 }
 
+/// Update All Objects
+- (void)_update {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    for (id target in self.targets) {
+        [target performSelector:NSSelectorFromString(@"ir_updateTheme")];
+    }
+#pragma clang diagnostic pop
+}
+
+- (void)_addTarget:(id)obj {
+    if (obj) [self.targets addObject:obj];
+}
+
+- (NSHashTable *)targets {
+    if (_targets) return _targets;
+    _targets = [NSHashTable hashTableWithOptions:NSHashTableWeakMemory];
+    return _targets;
+}
 @end

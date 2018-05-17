@@ -21,15 +21,15 @@
 {
     [super viewDidLoad];
     
-    NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"IRDefaultTheme" ofType:@"plist"];
+    NSString *usingfilePath = [[NSBundle mainBundle] pathForResource:@"IRDefaultTheme" ofType:@"plist"];
     
     IRThemeConfig *config = [IRThemeConfig new];
-    config.usingfilePath = defaultPath;
+    config.usingfilePath = usingfilePath;
     config.colorKey = @"Color";
     config.imageKey = @"Image";
     config.hybridKey = @"Hybrid";
     
-    config.defaultFilePath = defaultPath;
+    config.defaultFilePath = usingfilePath;
     config.isUseDefaultThemeValue = YES;
     
     BOOL success = [[IRThemeMgr manager] ir_themeWithConfig:config];
@@ -43,20 +43,43 @@
     for (int i = 0; i < 50000; i++) {
         
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
+        view.tag = i + 1;
         view.ir_backgroundColor(@"home_view_background");
+        if (i == 50000 -1) {
+           
+            view.frame = CGRectMake(100, 100 + 50 , 100, 20);
+            view.ir_backgroundColor(@"home_view_background1");
+        }
+      
         [self.view addSubview:view];
     }
     
-    
+
+
     CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
     NSLog(@"%f second", endTime - startTime);
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    for (UIView *view in self.view.subviews) {
+        if (view.tag % 2  == 0) {
+            [view removeFromSuperview];
+        }
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *usingfilePath = [[NSBundle mainBundle] pathForResource:@"IRNewTheme" ofType:@"plist"];
+        IRThemeConfig *config = [IRThemeMgr manager].config.copy;
+        config.usingfilePath = usingfilePath;
+        CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
+        [[IRThemeMgr manager] ir_themeWithConfig:config];
+        CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
+        NSLog(@"%f second", endTime - startTime);
+    });
+    
+  
 }
 
 @end

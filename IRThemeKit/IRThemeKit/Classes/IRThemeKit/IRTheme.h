@@ -6,46 +6,17 @@
 //  Copyright © 2018年 icoderRo. All rights reserved.
 //
 
-#define IRThemeCacheProperty \
-@property (strong, nonatomic) NSMutableDictionary * _Nullable ir_cache;
+typedef id _Nullable(^ _Nullable IRThemeArgBlock)(NSString * _Nullable keyPath);
+typedef id _Nullable(^ _Nullable IRThemeArgStateBlock)(NSString * _Nullable keyPath, UIControlState state);
+typedef id _Nullable(^ _Nullable IRThemeArgFloatBlock)(NSString * _Nullable keyPath, CGFloat f);
 
-#define IRThemeCacheImplementation \
-@dynamic ir_cache;\
-- (NSMutableDictionary *)ir_cache {\
-    NSMutableDictionary *obj = objc_getAssociatedObject(self,  @selector(ir_cache));\
-    if (!obj) {\
-        obj = [NSMutableDictionary dictionary];\
-        objc_setAssociatedObject(self,  @selector(ir_cache), obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);\
-    }\
-    return obj;\
-}\
-
-
-#import <Foundation/Foundation.h>
-
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface IRTheme : NSObject
-
-@property (nonatomic, weak, readonly) id target; // message target
-
-
-
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
-+ (instancetype)new UNAVAILABLE_ATTRIBUTE;
-
-+ (instancetype _Nullable)themeWithTarget:(id)target;
-
-@end
-NS_ASSUME_NONNULL_END
-
-typedef UIView *_Nullable(^ _Nullable IRThemeArg1Block)(NSString * _Nullable keyPath);
-
+#pragma mark - Methods
 
 @interface UIView (IRTheme)
-IRThemeCacheProperty
-- (IRThemeArg1Block)ir_backgroundColor;
+- (IRThemeArgBlock)ir_backgroundColor;
+@end
 
+@interface UIImageView (IRTheme)
+- (IRThemeArgBlock)ir_image;
 @end
 

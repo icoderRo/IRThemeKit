@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class IRThemeConfigHybrid;
 
-@interface IRThemeConfig : NSObject
+@interface IRThemeConfig : NSObject <NSCopying, NSCoding>
 
 /**< must set usingfilePath !!! */
 @property (nonatomic, copy, nonnull) NSString *usingfilePath;
@@ -44,6 +44,6 @@
 /**
  * can not sure wheter it is image or color
  */
-@interface IRThemeConfigHybrid : NSObject
+@interface IRThemeConfigHybrid : NSObject <NSCoding>
 
 @end
