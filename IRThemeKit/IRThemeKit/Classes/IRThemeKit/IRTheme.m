@@ -33,14 +33,14 @@
     return obj;\
 }
 
-#define ir_arg1UpdateTheme \
+#define ir_argUpdateTheme \
 [self.ir_cache enumerateKeysAndObjectsUsingBlock:^(NSString *  _Nonnull selStr, NSDictionary *  _Nonnull dict, BOOL * _Nonnull stop) {\
     NSString *keyPath = dict[ir_keyPath];\
     NSString *configKey = dict[ir_configKey];\
     id value = IRKeyPathValue(keyPath, configKey);\
     if (value) {\
         SEL sel = NSSelectorFromString(selStr);\
-        IRArg1Send(self, sel, value);\
+        IRArgSend(self, sel, value);\
     }\
 }];
 
@@ -65,6 +65,7 @@ static NSString * argSelctor(NSString *sel) {
 static NSString * const ir_addTarget = @"_addTarget:";
 static NSString * const ir_themeValue = @"_valueForKey:configKey:";
 static NSString * const ir_setBackgroundColor = @"setBackgroundColor:";
+static NSString * const ir_setTintColor = @"setTintColor:";
 static NSString * const ir_setImage = @"setImage:";
 
 #pragma mark - Objc_msgSend
@@ -92,7 +93,7 @@ static id IRKeyPathValue(NSString *keyPath, NSString *configKey) {
  * NSInvocation can Package multiple parameters but it much slower than others
  */
 
-static void IRArg1Send(id target, SEL sel, id value) {
+static void IRArgSend(id target, SEL sel, id value) {
     if (!target || !sel || ![target respondsToSelector:sel]) return;
     ir_arg1Send = (void(*)(id, SEL, id))objc_msgSend;
     
@@ -109,8 +110,7 @@ static void IRArg1Send(id target, SEL sel, id value) {
 IRThemeCacheProperty(UIView)
 @implementation UIView (IRTheme)
 IRThemeCacheImpl
-- (void)ir_updateTheme {ir_arg1UpdateTheme}
-
+- (void)ir_updateTheme {ir_argUpdateTheme}
 - (IRThemeArgBlock)ir_backgroundColor {
     return ^UIView *(NSString *keyPath) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -123,9 +123,26 @@ IRThemeCacheImpl
         if (!value) return self;
         
         SEL sel = NSSelectorFromString(ir_setBackgroundColor);
-        IRArg1Send(self, sel, value);
+        IRArgSend(self, sel, value);
         return self;
     };
+}
+
+- (IRThemeArgBlock)ir_tintColor {
+     return ^UIView *(NSString *keyPath) {
+         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+         dict[ir_keyPath] = keyPath;
+         dict[ir_configKey] = IRColorKey;
+         /// sel as key ensure the lastest value
+         [self.ir_cache setObject:dict.copy forKey:ir_setTintColor];
+         
+         id value = IRKeyPathValue(keyPath, IRColorKey);
+         if (!value) return self;
+         
+         SEL sel = NSSelectorFromString(ir_setTintColor);
+         IRArgSend(self, sel, value);
+         return self;
+     };
 }
 @end
 
@@ -133,8 +150,7 @@ IRThemeCacheImpl
 IRThemeCacheProperty(UIImageView)
 @implementation UIImageView (IRTheme)
 IRThemeCacheImpl
-- (void)ir_updateTheme {ir_arg1UpdateTheme}
-
+- (void)ir_updateTheme {ir_argUpdateTheme}
 - (IRThemeArgBlock)ir_image {
     return ^UIImageView *(NSString *keyPath) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -147,7 +163,7 @@ IRThemeCacheImpl
         if (!value) return self;
         
         SEL sel = NSSelectorFromString(ir_setImage);
-        IRArg1Send(self, sel, value);
+        IRArgSend(self, sel, value);
         return self;
     };
 }

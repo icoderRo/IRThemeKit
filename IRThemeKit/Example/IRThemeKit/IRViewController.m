@@ -37,15 +37,18 @@
     if (!success) {
         NSLog(@"not find configFile");
     }
-    
+
     CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
-    
-    for (int i = 0; i < 50000; i++) {
+    CGFloat count = 50000;
+    for (int i = 0; i < count; i++) {
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(100, 100 + 5 , 100, 20)];
+        [view setTitle:@"0000" forState:UIControlStateNormal];
         view.tag = i + 1;
         view.ir_backgroundColor(@"home_view_background");
-        if (i == 50000 -1) {
+
+        
+        if (i == count -1) {
            
             view.frame = CGRectMake(100, 100 + 50 , 100, 20);
             view.ir_backgroundColor(@"home_view_background1");
@@ -53,8 +56,6 @@
       
         [self.view addSubview:view];
     }
-    
-
 
     CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
     NSLog(@"%f second", endTime - startTime);

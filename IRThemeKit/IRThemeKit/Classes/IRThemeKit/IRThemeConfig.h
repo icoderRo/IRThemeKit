@@ -11,16 +11,16 @@
 
 @interface IRThemeConfig : NSObject <NSCopying, NSCoding>
 
-/**< must set usingfilePath !!! */
+/**< must set usingfilePath , fullFilePath !!! */
 @property (nonatomic, copy, nonnull) NSString *usingfilePath;
 
 /**< colorKey mapper to colorDict */
 @property (nonatomic, copy, nullable) NSString *colorKey;
-/**< imageKey use to get imageValue */
+/**< imageKey mapper to imageDict */
 @property (nonatomic, copy, nullable) NSString *imageKey;
 /**< hybridKey use to get image or color */
 @property (nonatomic, copy, nullable) NSString *hybridKey;
-/**< hybrid must set hybridKey  */
+/**< if use hybrid must set hybridKey  */
 @property (nonatomic, copy, nullable) IRThemeConfigHybrid *hybrid;
 
 
@@ -37,7 +37,7 @@
  
  */
 @property (nonatomic) BOOL isUseDefaultThemeValue;
-@property (nonatomic, copy, nullable) NSString *defaultFilePath;
+@property (nonatomic, copy, nullable) NSString *defaultFilePath; //< fullFilePath
 
 @end
 
