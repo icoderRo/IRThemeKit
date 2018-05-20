@@ -21,3 +21,8 @@ typedef id _Nullable(^ _Nullable IRThemeArgFloatBlock)(NSString * _Nullable keyP
 - (IRThemeArgBlock)ir_image;
 @end
 
+@interface UILabel (IRTheme)
+- (IRThemeArgBlock)ir_textColor;
+- (IRThemeArgBlock)ir_shadowColor;
+- (IRThemeArgBlock)ir_highlightedTextColor;
+@end

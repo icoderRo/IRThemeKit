@@ -168,3 +168,28 @@ IRThemeCacheImpl
     };
 }
 @end
+
+#pragma mark - UILabel
+@implementation UILabel (IRTheme)
+- (IRThemeArgBlock)ir_textColor {
+    return ^UILabel *(NSString *keyPath) {
+        
+        return self;
+    };
+}
+
+- (IRThemeArgBlock)ir_shadowColor {
+    return ^UILabel *(NSString *keyPath) {
+        
+        return self;
+    };
+}
+
+- (IRThemeArgBlock)ir_highlightedTextColor {
+    return ^UILabel *(NSString *keyPath) {
+        
+        return self;
+    };
+}
+
+@end
