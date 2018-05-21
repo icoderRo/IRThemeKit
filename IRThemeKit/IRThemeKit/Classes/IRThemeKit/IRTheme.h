@@ -26,3 +26,8 @@ typedef id _Nullable(^ _Nullable IRThemeArgFloatBlock)(NSString * _Nullable keyP
 - (IRThemeArgBlock)ir_shadowColor;
 - (IRThemeArgBlock)ir_highlightedTextColor;
 @end
+
+@interface UINavigationBar (IRtheme)
+- (IRThemeArgBlock)ir_barTintColor;
+- (IRThemeArgBlock)ir_tintColor;
+@end

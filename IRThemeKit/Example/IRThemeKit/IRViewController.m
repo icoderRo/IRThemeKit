@@ -46,7 +46,7 @@
         [view setTitle:@"0000" forState:UIControlStateNormal];
         view.tag = i + 1;
         view.ir_backgroundColor(@"home_view_background");
-
+        
         
         if (i == count -1) {
            
