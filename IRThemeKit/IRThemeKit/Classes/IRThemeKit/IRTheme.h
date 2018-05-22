@@ -29,5 +29,10 @@ typedef id _Nullable(^ _Nullable IRThemeArgFloatBlock)(NSString * _Nullable keyP
 
 @interface UINavigationBar (IRtheme)
 - (IRThemeArgBlock)ir_barTintColor;
-- (IRThemeArgBlock)ir_tintColor;
+- (IRThemeArgBlock)ir_tintColor NS_AVAILABLE_IOS(7_0);
 @end
+
+@interface UIBarButtonItem (IRtheme)
+- (IRThemeArgBlock)ir_tintColor NS_AVAILABLE_IOS(7_0);
+@end
+
